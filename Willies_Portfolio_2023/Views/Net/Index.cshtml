@@ -1,0 +1,137 @@
+﻿@using System.Dynamic;
+@using Willies_Portfolio_2023.Data;
+@model dynamic
+
+
+<div class="Net_page_background"></div>
+<div class="Net_section1_container">
+    <div class="Net_page_Title">
+        <h1>WILLIAM L.</h1>
+        <p>.NET Developer</p>
+        <div class="Net_page_sidetitle">
+            <p>
+                :{
+            </p>
+            <p>
+                Creative,
+            </p>
+            <p>
+                Full-stack,
+            </p>
+            <p>
+                Developer
+            </p>
+            <p>
+                }
+            </p>
+        </div>
+    </div>
+
+    <div class="Net_page_scrollicons">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2 108.009">
+            <line id="Line_6" data-name="Line 6" y1="108" x2="1" transform="translate(0.5 0.005)" fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="1" stroke-dasharray="10 11" />
+        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 69 14">
+            <text id="Scroll_for_more" data-name="Scroll for more" transform="translate(0 11)" fill="#fff" font-size="10.5" font-family="SegoeUI, Segoe UI"><tspan x="0" y="0">Scroll for more</tspan></text>
+        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 61.131 32.782">
+            <path id="Path_6" data-name="Path 6" d="M6.046,43.762l29.6,29.6L65.056,43.95" transform="translate(-4.986 -42.702)" fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="3" />
+        </svg>
+    </div>
+</div>
+<div class="Net_section2_container">
+    <div class="description_container">
+        <p>A love for problem-solving and an eye for visual storytelling</p>
+        <p>A strong appraisal for communication, user experience and planning</p>
+    </div>
+</div>
+<div class="projectswrapper">
+    @foreach (NetProject netproject in Model.NetProject)
+    {
+        <div class="Net_project1_container Net_project_container">
+            <div class="intro">
+                <h3 class="projectnumber">@("0")@netproject.Id</h3>
+                <div class="project_title">
+                    <h1>@netproject.Title</h1>
+                    <h2>@netproject.DescriptionHeader</h2>
+                    <p>@netproject.Description</p>
+                </div>
+                <img src="images/net/@(netproject.TitleImage).png" />
+            </div>
+                @foreach (NetProjectBreakdownSection breakdown in Model.NetBreakdownSection)
+                {
+                    int index = Model.NetBreakdownSection.IndexOf(breakdown)+1;
+
+
+                    <div class="breakdown">
+                    <div class="title">
+                            <h2>@breakdown.Header</h2>
+                            <h1>@breakdown.Title</h1>
+                        </div>
+                        <div class="description">
+                            <h2>@breakdown.DescriptionHeader</h2>
+                            @foreach (NetProjectDescription description in Model.NetDescription)
+                            {
+                                if (description.NetProjectBreakdownSection.Id == index)
+                                {
+                                    <p>@description.Content</p>
+                                
+                                }
+                            }
+
+                        </div>
+                        <div class="image" style="margin-bottom: calc((1 * 20*15) * 0.052083vw);">
+                            <img src="images/net/@(breakdown.BreakdownImage)" />
+                            @if (!string.IsNullOrEmpty(breakdown.BreakdownSecondaryImage))
+                            {
+                                <img style="position: absolute; right: 0; top: calc((29 * 16) * 0.052083vw);" src="images/net/@(breakdown.BreakdownSecondaryImage).gif">
+                            }
+                        </div>
+                    </div>
+                    <div class="end"></div>
+                }
+
+
+        </div>
+    }
+    </div>
+
+
+
+<div class="Net_end_container">
+    <a asp-controller="Films" asp-action="Index">
+        <h1>SHOW ALL PROJECTS</h1>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 6.2.1 by fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z" /></svg>
+    </a>
+    <a asp-controller="Contact" asp-action="Index">
+        <h1>CONTACT</h1>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 6.2.1 by fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z" /></svg>
+    </a>
+</div>
+
+
+
+@section Scripts{
+    <script>
+        $(document).ready(function(){
+            $( "p:contains('Front-end')").html(function() {
+                return $(this).text().replace(/Front-end/g, '<span class="highlight1">Front-end</span>');
+            });
+            $("p:contains('download the app')").html(function () {
+                return $(this).text().replace(/download the app/g, '<span class="highlight2">download the app</span>');
+            });
+            $( "p:contains('component that stays on top')").html(function() {
+                return $(this).text().replace(/component that stays on top/g, '<span class="highlight3">component that stays on top</span>');
+            });
+            $( "p:contains('responding well to input,')").html(function() {
+                return $(this).text().replace(/responding well to input,/g, '<span class="highlight4">responding well to input,</span>');
+            });
+            $( "p:contains('stable and reliable FAQ forum')").html(function() {
+                return $(this).text().replace(/stable and reliable FAQ forum/g, '<span class="highlight5">stable and reliable FAQ forum</span>');
+            });
+            $( "p:contains('easily accessible')").html(function() {
+                return $(this).text().replace(/easily accessible/g, '<span class="highlight6">easily accessible</span>');
+            });
+        });
+    </script>
+}

@@ -1,0 +1,144 @@
+﻿
+
+@model IEnumerable<Film>
+
+<div class="films_page_background"></div>
+<div class="films_section_container">
+
+    @foreach (var item in Model)
+    {
+        <div class="films_item">
+            <div class="film_preview_item" style="background-image: url(images/films_preview/@(item.FilmPreview).jpg);"></div>
+            <div class="Title_Container">
+                <h1>@item.Header</h1>
+                <h1>@item.Title</h1>
+            </div>
+        </div>
+    }
+
+<div class="film_preview">
+    <a id="prev_button">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 7.707 14.707">
+            <g id="Previous_Still" data-name="Previous Still" transform="translate(7.354 14.354) rotate(180)">
+                <line id="Line_4" data-name="Line 4" x1="7" y1="7" fill="none" stroke-width="1" />
+                <line id="Line_5" data-name="Line 5" x1="7" y2="7" transform="translate(0 7)" fill="none" stroke-width="1" />
+            </g>
+        </svg>
+    </a>
+    <div>
+        <div class="contentcontainer">
+            @foreach (var item in Model)
+            {
+                    <iframe src="@item.FilmMain" name="myiFrame" scrolling="no" frameborder="0" marginheight="0px" marginwidth="0px" allowfullscreen></iframe>
+            }
+        </div>
+        <svg style="visibility: hidden;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19 22">
+            <path id="Play_Button" data-name="Play Button" d="M11,0,22,19H0Z" transform="translate(19) rotate(90)" />
+        </svg>
+    </div>
+    <a id="next_button">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 7.707 14.707">
+            <g id="Next_Still" data-name="Next Still" transform="translate(0.354 0.354)">
+                <line id="Line_4" data-name="Line 4" x1="7" y1="7" fill="none" stroke-width="1" />
+                <line id="Line_5" data-name="Line 5" x1="7" y2="7" transform="translate(0 7)" fill="none" stroke-width="1" />
+            </g>
+        </svg>
+    </a>
+    <a id="close_button">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 9.707 9.707">
+            <g id="Cross" transform="translate(-1868.146 -22.146)">
+                <line id="Line_2" data-name="Line 2" x1="9" y2="9" transform="translate(1868.5 22.5)" fill="none" stroke-width="1" />
+                <line id="Line_3" data-name="Line 3" x1="9" y2="9" transform="translate(1877.5 22.5) rotate(90)" fill="none" stroke-width="1" />
+            </g>
+        </svg>
+    </a>
+</div>
+
+@section Scripts{
+    <script>
+            $(document).ready(function () {
+
+
+                var openslide = function (itemclicked) {
+                    var contentcontainer = $('.film_preview');
+                    contentcontainer.addClass('open');
+                    $('.film_preview .contentcontainer iframe:nth-of-type(' + itemclicked + ')').addClass('active');
+                    $("body").css("overflow", "hidden");
+
+                }
+
+                var nextimage = function () {
+                    var currentImg = $('.contentcontainer iframe.active');
+                    var nextImg = currentImg.next();
+
+                    //Stops the current video playing
+                    var currentimgattr = currentImg.attr('src');
+                    currentImg.attr('src', currentimgattr);
+
+
+                    if (!nextImg.length) {
+                        nextImg = $('.contentcontainer iframe:first');
+                        nextImg.addClass('active');
+                        currentImg.removeClass('active');
+                    }
+                    else {
+                        nextImg.addClass('active');
+                        currentImg.removeClass('active');
+                    }
+                }
+
+                var previmage = function () {
+                    var currentImg = $('.contentcontainer iframe.active');
+                    var prevImg = currentImg.prev();
+
+                    //Stops the current video playing
+                    var currentimgattr = currentImg.attr('src');
+                    currentImg.attr('src', currentimgattr);
+
+                    if (!prevImg.length) {
+                        prevImg = $('.contentcontainer iframe:last-of-type');
+                        prevImg.addClass('active');
+                        currentImg.removeClass('active');
+                    }
+                    else {
+                        prevImg.addClass('active');
+                        currentImg.removeClass('active');
+                    }
+
+                }
+                var exitslide = function () {
+                    var currentImg = $('.contentcontainer iframe.active');
+                    var contentcontainer = $('.film_preview');
+
+
+                    //Stops the current video playing
+                    var currentimgattr = currentImg.attr('src');
+                    currentImg.attr('src', currentimgattr);
+
+                    contentcontainer.removeClass('open');
+                    currentImg.removeClass('active');
+                    $("body").css("overflow", "visible");
+
+                    $('.film_preview .contentcontainer iframe:nth-of-type(' + itemclicked + ')').removeClass('active');
+                }
+
+                $(".films_item").on("click", function () {
+                    var itemclicked = $(this).index() + 1;
+                    openslide(itemclicked);
+                });
+
+                $("#next_button").on("click", function () {
+                    nextimage();
+                });
+
+                $("#prev_button").on("click", function () {
+                    previmage();
+                });
+
+                $("#close_button").on("click", function () {
+                    exitslide();
+                });
+
+            });
+    </script>
+}

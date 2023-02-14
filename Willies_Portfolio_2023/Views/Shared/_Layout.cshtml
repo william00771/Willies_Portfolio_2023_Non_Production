@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>@ViewData["Title"] - Willies_Portfolio_2023</title>
+
+    <link rel="icon" href="~/images/icon.ico">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Willies_Portfolio_2023.styles.css" asp-append-version="true" />
+    
+</head>
+<body>
+    <nav>
+        <div class="nav_logo" style="
+            @if(Context.Request.Path  == "/")
+            @("visibility: collapse;")
+        ">
+            <h1>WILLIAM L.</h1>
+            <p>.NET Developer</p>
+        </div>
+        <div class="nav_bar">
+            <a asp-controller="Net" asp-action="Index">
+                <p style="
+                    @if(Context.Request.Path  == "/")
+                    @("color: var(--text_main);")
+                ">.NET</p>
+            </a>
+            <a asp-controller="Films" asp-action="Index">
+                <p style="
+                   @if(Context.Request.Path == "/Films")
+                   @("color: var(--text_main);")
+                 ">Films</p>
+            </a>
+            <a asp-controller="Stills" asp-action="Index">
+                <p style="
+                    @if(Context.Request.Path  == "/Stills")
+                    @("color: var(--text_main);")
+                ">Stills</p>
+            </a>
+            <a asp-controller="Contact" asp-action="Index">
+                <p style="
+                   @if(Context.Request.Path == "/Contact") 
+                    @("color: var(--text_main);")
+                    else if(Context.Request.Path == "/Contact/PostSuccess")
+                    @("color: var(--text_main);")
+                ">Contact</p>
+            </a>
+        </div>
+    </nav>
+    @RenderBody()
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+
+
